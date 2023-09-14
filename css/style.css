@@ -11,7 +11,8 @@ li,
 div,
 img,
 input,
-button {
+button,
+textarea {
   margin: 0;
   padding: 0;
   border: none;
@@ -20,7 +21,7 @@ button {
 
 /* Estilos para o cabeçalho */
 header {
-  background-color: #333;
+  background-color: #9cadadff;
   color: #fff;
   display: flex;
   align-items: center;
@@ -28,9 +29,9 @@ header {
   padding: 10px 20px;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
+.logo img {
+  max-width: 80px;
+  height: auto;
 }
 
 .current-route {
@@ -43,9 +44,10 @@ header {
 }
 
 .search-bar input {
-  padding: 5px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  transition: border-color 0.3s;
 }
 
 .search-bar button {
@@ -53,9 +55,14 @@ header {
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 8px 12px;
   margin-left: 10px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+  background-color: #444;
 }
 
 .notifications-icon,
@@ -63,6 +70,12 @@ header {
   font-size: 24px;
   margin: 0 10px;
   cursor: pointer;
+  transition: color 0.3s;
+}
+
+.notifications-icon:hover,
+.messages-icon:hover {
+  color: #ddd;
 }
 
 .user-profile {
@@ -83,4 +96,86 @@ article {
   margin: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+/* Estilos para o formulário de postagem */
+.container {
+  padding: 20px;
+  margin: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #555;
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para a janela modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  width: 60%;
+  max-width: 500px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modelo {
+  display: none;
 }
