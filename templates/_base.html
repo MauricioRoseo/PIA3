@@ -1,9 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fórum Virtual</title>
+    <title>{% block head_title %}Fórum Virtual{% endblock %}</title>
+    {% block css %}
     <link rel="stylesheet" href="css/style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
@@ -11,8 +13,10 @@
       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
       crossorigin="anonymous"
     />
+    {% endblock %}
   </head>
   <body>
+    {% block header %}
     <header>
       <div class="logo">
         <img src="img/logo.png" />
@@ -33,6 +37,7 @@
         <span>Nickname do Usuário</span>
       </div>
     </header>
+    {% endblock %}
 
     <div class="modelo">
       <div class="post">
@@ -94,12 +99,16 @@
       </div>
     </div>
 
+    {% block article %}
     <article>
       <h1>Home</h1>
       <div class="modelo-area"></div>
     </article>
+    {% endblock %}
 
     <!-- Seu arquivo JavaScript -->
+    {% block JavaScript %}
     <script src="js/script.js"></script>
+    {% endblock %}
   </body>
 </html>
