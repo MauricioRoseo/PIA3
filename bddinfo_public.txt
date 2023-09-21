@@ -1,0 +1,3 @@
+Database host address: Ecochan.mysql.pythonanywhere-services.com
+Username: Ecochan
+Name: Ecochan

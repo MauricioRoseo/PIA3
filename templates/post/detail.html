@@ -1,0 +1,7 @@
+{% extends '_base.html' %} {% block article %}
+<div>
+  <h2>Em: {{ post.pub_date|date:" d / m / Y"}}</h2>
+  <h1>{{ post.post_title }}</h1>
+  <p>{{ post.body_text}}</p>
+</div>
+{% endblock %}
