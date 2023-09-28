@@ -5,21 +5,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block head_title %}Fórum Virtual{% endblock %}</title>
-    {% block css %}
-    <link rel="stylesheet" href="static/css/style.css" />
+    {% block css %} <link rel="stylesheet" href={% static "css/style.css" %} />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}">
     {% endblock %}
   </head>
   <body>
     {% block header %}
     <header>
       <div class="logo">
-        <img src="img/logo.png" />
+        <img src={% static "img/Logo.png" %} />
       </div>
       <div class="current-route">Página Atual</div>
       <div class="search-bar">
@@ -27,13 +27,13 @@
         <button>Buscar</button>
       </div>
       <div class="notifications-icon">
-        <img src="img/notifications.png" />
+        <img src={% static "img/notifications.png" %} />
       </div>
       <div class="messages-icon">
-        <img src="img/mail.png" />
+        <img src={% static "img/mail.png" %}/>
       </div>
       <div class="user-profile">
-        <img src="profile.jpg" alt="Imagem do Perfil" />
+        <img src={% static "profile.jpg" %} alt="Imagem do Perfil" />
         <span>Nickname do Usuário</span>
       </div>
     </header>
@@ -55,11 +55,11 @@
         <div class="post-content"></div>
         <div class="rating">
           <div class="Downvote">
-            <img src="img/thumb down.png" />
+            <img src={% static "img/thumbdown.png" %} />
             <div class="Downvote-qtd">0</div>
           </div>
           <div class="Upvote">
-            <img src="img/thumb up.png" />
+            <img src={% static "img/thumb up.png" %}/>
             <div class="Upvote-qtd">0</div>
           </div>
         </div>
@@ -67,37 +67,9 @@
     </div>
 
     <div class="container mt-5">
-      <button class="btn btn-primary open-modal">Realizar Postagem</button>
+      <button id="create-post" class="btn btn-primary open-modal">Realizar Postagem</button>
     </div>
 
-    <!-- Modal -->
-    <div class="modal">
-      <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <h2>Postagem</h2>
-        <form>
-          <div class="form-group">
-            <label for="titulo">Título</label>
-            <input
-              type="text"
-              class="form-control"
-              id="titulo"
-              placeholder="Digite o título"
-            />
-          </div>
-          <div class="form-group">
-            <label for="conteudo">Conteúdo</label>
-            <textarea
-              class="form-control"
-              id="conteudo"
-              rows="5"
-              placeholder="Digite o conteúdo"
-            ></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
-      </div>
-    </div>
 
     {% block article %}
     <article>
@@ -108,7 +80,24 @@
 
     <!-- Seu arquivo JavaScript -->
     {% block JavaScript %}
-    <script src="js/script.js"></script>
+    <script src={% static "js/script.js" %}></script>
+    <script src="{% static 'assets/js/bootstrap.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap5.modal.forms.js' %}"></script>
+    <!-- You can alternatively load the minified version -->
+    <script src="{% static 'js/bootstrap5.modal.forms.min.js' %}"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (e) => {
+      modalForm(document.getElementById('create-post'), {
+      formURL: "{% url 'post_add' %}"
+      })
+    });
+    </script>
+    
     {% endblock %}
+    <!-- Bootstrap 5 -->
+    
+
   </body>
 </html>

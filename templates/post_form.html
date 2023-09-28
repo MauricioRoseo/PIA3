@@ -1,0 +1,12 @@
+<div class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2>Postagem</h2>
+    <form>
+      <div class="form-group" method="post">
+        {% csrf_token %} {{ form.as_p }}
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+  </div>
+</div>

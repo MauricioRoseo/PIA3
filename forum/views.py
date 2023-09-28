@@ -2,6 +2,13 @@ from django.shortcuts import render, get_object_or_404
 
 from django.views.generic.detail import DetailView
 
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
+from bootstrap_modal_forms.generic import BSModalCreateView
+
 from forum.models import Post
 
 from django.http import HttpResponse
@@ -22,3 +29,51 @@ class PostDetailView(DetailView):
     model = Post
     template_name = 'post/detail.html'
     context_object_name = 'post'
+
+def get_all_posts(request):
+    posts = list(Post.objects.values('pk','body_text', 'pub_date'))
+    data = {'success': True, 'posts': posts}
+    json_data= json.dumps(data, indent=1, cls=DjangoJSONEncoder)
+    response = HttpResponse(json_data, content_type='application/json')
+    response['Acess-Control-Allow-Origin']='*' #requisição de qualquer origem
+
+    return response
+
+def get_post(request, post_id):
+    post = Post.objects.filter(pk=post_id).values('pk', 'body_text', 'pub_date').first()
+    data = {'success': True, 'post': post}
+    status=200
+    if post is None:
+        data = {'success': False, 'error': 'Post ID não existe'}
+        status=404
+    response = HttpResponse(json.dumps(data, indent=1, cls=DjangoJSONEncoder), content_type='application/json', status=status)
+    response['Acess-Control-Allow-Origin']='*'
+    return response
+
+class PostCreateView(BSModalCreateView):
+    model = Post
+    template_name = 'post_form.html'
+    fields = ('post_title', 'body_text', )
+    success_url = reverse_lazy('posts_list')
+
+@csrf_exempt
+def create_post(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        post_title = data.get('post_title')
+        body_text= data.get('body_text')
+        if body_text is None:
+            data = {'success': False, 'error': 'Texto do post inválido.'}
+            status = 400
+        if post_title is None:
+            data = {'success': False, 'error': 'Título do post inválido.'}
+            status = 400
+        else:
+            post= Post(post_title=post_title, body_text=body_text)
+            post.save()
+            post_data= Post.objects.filter(pk=post.id).values('pk','post_title', 'body_text', 'pub_date').first()
+            data = {'success': True, 'post': post_data}
+            status=201
+    response= HttpResponse(json.dumps(data, indent=1, cls=DjangoJSONEncoder), content_type='application/json', status=status)
+    response['Acess-Control-Allow-Origin']='*'
+    return response
