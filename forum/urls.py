@@ -1,6 +1,6 @@
 from django.urls import path
 
-from forum.views import (index, ola, post_show, PostDetailView,get_all_posts, get_post, PostCreateView, create_post)
+from forum.views import (index, ola, post_show, PostDetailView,get_all_posts, get_post, PostCreateView, create_post, post_create_modal)
 
 urlpatterns = [
     path('', index, name="index"),
@@ -12,4 +12,5 @@ urlpatterns = [
     path('api/posts/<int:post_id>', get_post, name='post_data'),
     path('post_add/', PostCreateView.as_view(), name='post_add'),
     path('api/index', create_post, name='creat_post_data'),
+    path('index/', post_create_modal, name='post_modal_add'),
 ]

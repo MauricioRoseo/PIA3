@@ -1,15 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 
-from django.views.generic.detail import DetailView
+from django.views.generic.detail import DetailView, ListView, TemplateView
 
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from bootstrap_modal_forms.generic import BSModalCreateView
+
 
 from forum.models import Post
+from forum.forms import PostModelForm
 
 from django.http import HttpResponse
 
@@ -50,11 +51,11 @@ def get_post(request, post_id):
     response['Acess-Control-Allow-Origin']='*'
     return response
 
-class PostCreateView(BSModalCreateView):
+class PostCreateView(CreateView):
     model = Post
-    template_name = 'post_form.html'
+    template_name = 'index.html'
     fields = ('post_title', 'body_text', )
-    success_url = reverse_lazy('posts_list')
+    success_url = reverse_lazy('posts_all')
 
 @csrf_exempt
 def create_post(request):
@@ -77,3 +78,22 @@ def create_post(request):
     response= HttpResponse(json.dumps(data, indent=1, cls=DjangoJSONEncoder), content_type='application/json', status=status)
     response['Acess-Control-Allow-Origin']='*'
     return response
+
+class SobreTemplateView(TemplateView):
+    template_name= '/index.html'
+    
+def post_create_modal(request):
+    if request.method == 'POST':
+        form = PostModelForm(request.POST)
+        if form.is_valid():
+            movie = form.save()
+            return HttpResponse(
+                status = 204
+                headers={
+                    'HX-Trigger': json.dumps({
+                        'postListChanged': None
+                    })
+                })
+    else:
+        form = PostModelForm()
+    return render(request, 'post/post_modal_form.html',{'form': form})
