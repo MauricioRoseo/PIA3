@@ -12,5 +12,5 @@ urlpatterns = [
     path('api/posts/<int:post_id>', get_post, name='post_data'),
     path('post_add/', PostCreateView.as_view(), name='post_add'),
     path('api/index', create_post, name='creat_post_data'),
-    path('index/', post_create_modal, name='post_modal_add'),
+    path('post_add_modal/', post_create_modal, name='post_modal_add'),
 ]

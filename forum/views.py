@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from django.views.generic.detail import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -86,9 +86,9 @@ def post_create_modal(request):
     if request.method == 'POST':
         form = PostModelForm(request.POST)
         if form.is_valid():
-            movie = form.save()
+            form.save()
             return HttpResponse(
-                status = 204
+                status = 204,
                 headers={
                     'HX-Trigger': json.dumps({
                         'postListChanged': None
